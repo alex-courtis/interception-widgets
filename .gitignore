@@ -1,0 +1,5 @@
+keycodemapper
+modifiertrainer
+**/*.o
+**/*.log
+tags
