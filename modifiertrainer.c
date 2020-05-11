@@ -18,6 +18,10 @@ typedef struct Modifier {
 static Modifier mods[] = {
     { KEY_LEFTSHIFT,  1, 0, },
     { KEY_RIGHTSHIFT, 0, 0, },
+    { KEY_LEFTCTRL,   1, 0, },
+    { KEY_RIGHTCTRL,  0, 0, },
+    { KEY_LEFTALT,    1, 0, },
+    { KEY_RIGHTALT,   0, 0, },
 };
 
 typedef struct Key {
