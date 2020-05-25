@@ -12,16 +12,19 @@
 typedef struct Modifier {
     int code;
     unsigned int left;
+    unsigned int training;
     unsigned int active;
 } Modifier;
 
 static Modifier mods[] = {
-    { KEY_LEFTSHIFT,  1, 0, },
-    { KEY_RIGHTSHIFT, 0, 0, },
-    { KEY_LEFTCTRL,   1, 0, },
-    { KEY_RIGHTCTRL,  0, 0, },
-    { KEY_LEFTALT,    1, 0, },
-    { KEY_RIGHTALT,   0, 0, },
+    { KEY_LEFTSHIFT,  1, 1, 0, },
+    { KEY_RIGHTSHIFT, 0, 1, 0, },
+    { KEY_LEFTCTRL,   1, 1, 0, },
+    { KEY_RIGHTCTRL,  0, 1, 0, },
+    { KEY_LEFTALT,    1, 1, 0, },
+    { KEY_RIGHTALT,   0, 1, 0, },
+    { KEY_LEFTMETA,   1, 0, 0, },
+    { KEY_RIGHTMETA,  0, 0, 0, },
 };
 
 typedef struct Key {
@@ -80,7 +83,7 @@ void
 loop() {
     struct input_event input;
     size_t i;
-    unsigned int al, ar, squish;
+    unsigned int al, ar, at, squish;
 
     while (read_event(&input)) {
         squish = 0;
@@ -96,7 +99,7 @@ loop() {
         }
 
         // modifier states
-        for (i = 0, al = 0, ar = 0; i < LENGTH(mods); i++) {
+        for (i = 0, al = 0, ar = 0, at = 0; i < LENGTH(mods); i++) {
             if (input.code == mods[i].code)
                 mods[i].active = input.value != INPUT_VAL_RELEASE;
 
@@ -107,14 +110,20 @@ loop() {
                 else {
                     ar++;
                 }
+                if (mods[i].training) {
+                    at++;
+                }
             }
         }
 
         // maybe squish if the user is pressing modifiers from one side only
-        if (al > 0 && ar == 0)
-            squish = should_squish(&input, keysleft, LENGTH(keysleft));
-        else if (al == 0 && ar > 0)
-            squish = should_squish(&input, keysright, LENGTH(keysright));
+        if (at > 0) {
+            if (al > 0 && ar == 0) {
+                squish = should_squish(&input, keysleft, LENGTH(keysleft));
+            } else if (al == 0 && ar > 0) {
+                squish = should_squish(&input, keysright, LENGTH(keysright));
+            }
+        }
 
         if (!squish)
             write_event(&input);
