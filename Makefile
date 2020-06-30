@@ -10,10 +10,6 @@ all: keycodemapper modifiertrainer
 
 $(OBJ): config.mk $(HDR)
 
-keycodemapper: keycodemapper.o
-
-modifiertrainer: modifiertrainer.o
-
 clean:
 	rm -f keycodemapper modifiertrainer $(OBJ)
 

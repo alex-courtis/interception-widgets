@@ -10,8 +10,7 @@ typedef struct Mapping {
 } Mapping;
 
 static const Mapping mappings[] = {
-    { KEY_F11,  KEY_PASTE,  },
-    { KEY_F12,  KEY_COPY,   },
+    { KEY_CAPSLOCK, KEY_ESC, },
 };
 
 int
