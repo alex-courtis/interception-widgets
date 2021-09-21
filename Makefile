@@ -6,12 +6,12 @@ CXXSRC =
 
 OBJ = $(CSRC:.c=.o) $(CXXSRC:.cpp=.o)
 
-all: keycodemapper modifiertrainer
+all: keycodemapper modifiertrainer tags
 
 $(OBJ): config.mk $(HDR)
 
 clean:
-	rm -f keycodemapper modifiertrainer $(OBJ)
+	rm -f keycodemapper modifiertrainer tags $(OBJ)
 
 install:
 	mkdir -p $(PREFIX)/bin
@@ -23,7 +23,10 @@ install:
 uninstall:
 	rm -f $(PREFIX)/bin/keycodemapper $(PREFIX)/bin/modifiertrainer
 
-ctags:
-	ctags-c $(CPPFLAGS) $(HDR) $(CSRC) $(CXXSRC)
+tags: $(CSRC)
+	ctags --fields=+S --c-kinds=+p \
+		$(^) \
+		/usr/include/st*.h \
+		/usr/include/linux/input*.h
 
 .PHONY: all clean install uninstall ctags

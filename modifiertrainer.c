@@ -33,17 +33,17 @@ typedef struct Key {
 } Key;
 
 static Key keysleft[] = {
-    { KEY_RIGHTBRACE, 0, }, { KEY_2, 0, }, { KEY_3, 0, }, { KEY_4, 0, }, { KEY_5, 0, }, { KEY_6, 0, },
-    { KEY_1, 0, },          { KEY_Q, 0, }, { KEY_W, 0, }, { KEY_E, 0, }, { KEY_R, 0, }, { KEY_T, 0, },
-    { KEY_LEFTBRACE, 0, },  { KEY_A, 0, }, { KEY_S, 0, }, { KEY_D, 0, }, { KEY_F, 0, }, { KEY_G, 0, },
-    { KEY_KP0, 0, },        { KEY_Z, 0, }, { KEY_X, 0, }, { KEY_C, 0, }, { KEY_V, 0, }, { KEY_B, 0, },
+    { KEY_1, 0, },          { KEY_2, 0, }, { KEY_3, 0, }, { KEY_4, 0, }, { KEY_5, 0, }, { KEY_6, 0, },
+    { KEY_GRAVE, 0, },      { KEY_Q, 0, }, { KEY_W, 0, }, { KEY_E, 0, }, { KEY_R, 0, }, { KEY_T, 0, },
+    { KEY_RIGHTBRACE, 0, }, { KEY_A, 0, }, { KEY_S, 0, }, { KEY_D, 0, }, { KEY_F, 0, }, { KEY_G, 0, },
+    { KEY_F12, 0, },        { KEY_Z, 0, }, { KEY_X, 0, }, { KEY_C, 0, }, { KEY_V, 0, }, { KEY_B, 0, },
 };
 
 static Key keysright[] = {
     { KEY_7, 0, }, { KEY_8, 0, }, { KEY_9, 0, },     { KEY_0, 0, },   { KEY_MINUS, 0, },     { KEY_EQUAL, 0, },
     { KEY_Y, 0, }, { KEY_U, 0, }, { KEY_I, 0, },     { KEY_O, 0, },   { KEY_P, 0,     },     { KEY_BACKSLASH, 0, },
     { KEY_H, 0, }, { KEY_J, 0, }, { KEY_K, 0, },     { KEY_L, 0, },   { KEY_SEMICOLON, 0, }, { KEY_APOSTROPHE, 0, },
-    { KEY_N, 0, }, { KEY_M, 0, }, { KEY_COMMA, 0, }, { KEY_DOT, 0, }, { KEY_SLASH, 0, },     { KEY_GRAVE, 0, },
+    { KEY_N, 0, }, { KEY_M, 0, }, { KEY_COMMA, 0, }, { KEY_DOT, 0, }, { KEY_SLASH, 0, },     { KEY_BACKSLASH, 0, },
 };
 
 int
