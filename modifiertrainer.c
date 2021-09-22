@@ -41,7 +41,7 @@ static Key keysleft[] = {
 
 static Key keysright[] = {
     { KEY_7, 0, }, { KEY_8, 0, }, { KEY_9, 0, },     { KEY_0, 0, },   { KEY_MINUS, 0, },     { KEY_EQUAL, 0, },
-    { KEY_Y, 0, }, { KEY_U, 0, }, { KEY_I, 0, },     { KEY_O, 0, },   { KEY_P, 0,     },     { KEY_BACKSLASH, 0, },
+    { KEY_Y, 0, }, { KEY_U, 0, }, { KEY_I, 0, },     { KEY_O, 0, },   { KEY_P, 0,     },     { KEY_LEFTBRACE, 0, },
     { KEY_H, 0, }, { KEY_J, 0, }, { KEY_K, 0, },     { KEY_L, 0, },   { KEY_SEMICOLON, 0, }, { KEY_APOSTROPHE, 0, },
     { KEY_N, 0, }, { KEY_M, 0, }, { KEY_COMMA, 0, }, { KEY_DOT, 0, }, { KEY_SLASH, 0, },     { KEY_BACKSLASH, 0, },
 };
