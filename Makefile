@@ -1,17 +1,16 @@
 include config.mk
 
-HDR =
-CSRC = keycodemapper.c modifiertrainer.c
-CXXSRC =
+INC_H =
 
-OBJ = $(CSRC:.c=.o) $(CXXSRC:.cpp=.o)
+SRC_C = $(wildcard *.c)
+SRC_O = $(SRC_C:.c=.o)
 
 all: keycodemapper modifiertrainer tags
 
-$(OBJ): config.mk $(HDR)
+$(OBJ): $(INC_H)
 
 clean:
-	rm -f keycodemapper modifiertrainer tags $(OBJ)
+	rm -f keycodemapper modifiertrainer tags $(SRC_O)
 
 install:
 	mkdir -p $(PREFIX)/bin
@@ -23,10 +22,9 @@ install:
 uninstall:
 	rm -f $(PREFIX)/bin/keycodemapper $(PREFIX)/bin/modifiertrainer
 
-tags: $(CSRC)
-	ctags --fields=+S --c-kinds=+p \
-		$(^) \
-		/usr/include/st*.h \
-		/usr/include/linux/input*.h
+# https://github.com/alex-courtis/arch/blob/7ca6c8d7f7aa910ec522470bb7a96ddb24c9a1ea/bin/ctags-something
+tags: $(SRC_C)
+	ctags-c   $(CFLAGS)   $(CPPFLAGS) --project-src $(SRC_C)
 
-.PHONY: all clean install uninstall ctags
+.PHONY: all clean install uninstall
+
