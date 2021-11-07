@@ -1,5 +1,6 @@
 keycodemapper
 modifiertrainer
+selpaster
 **/*.o
 **/*.log
 tags

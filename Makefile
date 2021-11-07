@@ -1,30 +1,28 @@
 include config.mk
 
-INC_H =
+INC = $(wildcard *.h)
+SRC = $(wildcard *.c)
+OBJ = $(SRC:.c=.o)
+BIN = $(SRC:.c=)
 
-SRC_C = $(wildcard *.c)
-SRC_O = $(SRC_C:.c=.o)
+all: $(BIN) tags
 
-all: keycodemapper modifiertrainer tags
-
-$(OBJ): $(INC_H)
+$(OBJ): $(INC)
 
 clean:
-	rm -f keycodemapper modifiertrainer tags $(SRC_O)
+	rm -f tags $(OBJ) $(BIN)
 
-install:
+install: $(BIN)
+	chmod 755 $(BIN)
 	mkdir -p $(PREFIX)/bin
-	cp -f keycodemapper $(PREFIX)/bin
-	chmod 755 $(PREFIX)/bin/keycodemapper
-	cp -f modifiertrainer $(PREFIX)/bin
-	chmod 755 $(PREFIX)/bin/modifiertrainer
+	sudo cp -f $(BIN) $(PREFIX)/bin
 
 uninstall:
-	rm -f $(PREFIX)/bin/keycodemapper $(PREFIX)/bin/modifiertrainer
+	rm -f $(addprefix $(PREFIX)/bin/,$(BIN))
 
 # https://github.com/alex-courtis/arch/blob/7ca6c8d7f7aa910ec522470bb7a96ddb24c9a1ea/bin/ctags-something
-tags: $(SRC_C)
-	ctags-c   $(CFLAGS)   $(CPPFLAGS) --project-src $(SRC_C)
+tags: $(SRC) $(INC)
+	ctags-c $(CFLAGS) $(CPPFLAGS) --project-src $(SRC) $(INC)
 
 .PHONY: all clean install uninstall
 

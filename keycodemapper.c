@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <linux/input.h>
 
-#define LENGTH(X) (sizeof X / sizeof X[0])
+#include "common.h"
 
 typedef struct Mapping {
     int from;
@@ -30,11 +30,10 @@ loop() {
     size_t i;
 
     while (read_event(&input)) {
-        // uinput doesn't need sync events
         if (input.type == EV_MSC && input.code == MSC_SCAN)
             continue;
 
-        // forward anything that is not a key event
+        // forward anything that is not a key event, including SYNs
         if (input.type != EV_KEY) {
             write_event(&input);
             continue;
