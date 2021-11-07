@@ -47,7 +47,7 @@ void lg_contents(char *contents, char *desc) {
     lg_inf("%s '%s%s'", desc, buf, n > 32 ? "..." : "");
 }
 
-bool left_shift_down = false;
+bool shift_down = false;
 bool twiddled = false;
 
 #define CLIP_SEL_CHUNK 16384
@@ -217,17 +217,17 @@ loop() {
             continue;
         }
 
-        if (input.code == KEY_LEFTSHIFT) {
-            left_shift_down = input.value != INPUT_VAL_RELEASE;
+        if (input.code == KEY_LEFTSHIFT || input.code == KEY_RIGHTSHIFT) {
+            shift_down = input.value != INPUT_VAL_RELEASE;
         }
 
         // twiddle on shifted insert PRESS
-        if (left_shift_down && input.code == KEY_INSERT && input.value == INPUT_VAL_PRESS) {
+        if (shift_down && input.code == KEY_INSERT && input.value == INPUT_VAL_PRESS) {
             twiddle();
         }
 
         // twiddle on shifted insert RELEASE
-        if (left_shift_down && input.code == KEY_INSERT && input.value == INPUT_VAL_RELEASE) {
+        if (shift_down && input.code == KEY_INSERT && input.value == INPUT_VAL_RELEASE) {
             untwiddle();
         }
 
