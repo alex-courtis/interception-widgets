@@ -16,8 +16,8 @@ static Modifier mods[] = {
     { KEY_RIGHTSHIFT, 0, 1, 0, },
     { KEY_LEFTCTRL,   1, 1, 0, },
     { KEY_RIGHTCTRL,  0, 1, 0, },
-    { KEY_LEFTALT,    1, 1, 0, },
-    { KEY_RIGHTALT,   0, 1, 0, },
+    { KEY_LEFTALT,    1, 0, 0, },
+    { KEY_RIGHTALT,   0, 0, 0, },
     { KEY_LEFTMETA,   1, 0, 0, },
     { KEY_RIGHTMETA,  0, 0, 0, },
 };
