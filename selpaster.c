@@ -16,11 +16,11 @@ static struct timeval tv;
 
 void lg_print(const char *prefix, const char *__restrict __format, va_list __args) {
 
-	gettimeofday(&tv, NULL);
-	struct tm *tm = localtime(&tv.tv_sec);
+    gettimeofday(&tv, NULL);
+    struct tm *tm = localtime(&tv.tv_sec);
 
-	fprintf(lf, "%s [%02d:%02d:%02d.%03ld] ", prefix, tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec / 1000);
-	vfprintf(lf, __format, __args);
+    fprintf(lf, "%s [%02d:%02d:%02d.%03ld] ", prefix, tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec / 1000);
+    vfprintf(lf, __format, __args);
     fprintf(lf, "\n");
     fflush(lf);
 }
@@ -111,7 +111,7 @@ finally:
     return success;
 }
 
-bool read_cmd(char *command, char **to, int *to_size) {
+bool read_cmd(char *command, char **to, int *to_size, bool trim_trailing) {
     static char buf[1024];
     static int rc;
     static int to_offset;
@@ -157,8 +157,9 @@ bool read_cmd(char *command, char **to, int *to_size) {
         goto finally;
     }
 
-    // trim the trailing newline appended by wl-paste
-    (*to)[strlen(*to) - 1] = '\0';
+    if (trim_trailing) {
+        (*to)[strlen(*to) - 1] = '\0';
+    }
 
 finally:
 
@@ -173,18 +174,34 @@ void twiddle() {
         return;
 
     // read the clipboard
-    if (!read_cmd("wl-paste", &clipboard, &clipboard_size))
-        return;
-    lg_contents(clipboard, "repl clipboard");
+    if (read_cmd("wl-paste", &clipboard, &clipboard_size, true)) {
+        lg_contents(clipboard, "wl-paste repl clipboard");
 
-    // read the selection
-    if (!read_cmd("wl-paste -p", &selection, &selection_size))
-        return;
-    lg_contents(selection, "with selection");
+        // read the selection
+        if (!read_cmd("wl-paste -p", &selection, &selection_size, true))
+            return;
+        lg_contents(selection, "with selection");
 
-    // write the selection to clipboard
-    if (!write_cmd("wl-copy", &selection))
+        // write the selection to clipboard
+        if (!write_cmd("wl-copy", &selection))
+            return;
+
+    } else if (read_cmd("xsel -o -b", &clipboard, &clipboard_size, false)) {
+        lg_contents(clipboard, "xsel repl clipboard");
+
+        // read the selection
+        if (!read_cmd("xsel -o -p", &selection, &selection_size, false))
+            return;
+        lg_contents(selection, "with selection");
+
+        // write the selection to clipboard
+        if (!write_cmd("xsel -i -b", &selection))
+            return;
+
+    } else {
+        lg_err("failed to twiddle with wl-paste and wl-copy");
         return;
+    }
 
     twiddled = true;
 }
@@ -197,10 +214,13 @@ void untwiddle() {
     twiddled = false;
 
     // restore the clipboard
-    if (!write_cmd("wl-copy", &clipboard))
-        return;
-
-    lg_contents(clipboard, "rest clipboard");
+    if (write_cmd("wl-copy", &clipboard)) {
+        lg_contents(clipboard, "wl-copy rest clipboard");
+    } else if (write_cmd("xsel -i -b", &clipboard)) {
+        lg_contents(clipboard, "xsel rest clipboard");
+    } else {
+        lg_err("failed to untwiddle with wl-paste and wl-copy");
+    }
 }
 
 void
@@ -237,6 +257,7 @@ loop() {
 }
 
 int
+// main_real() {
 main() {
     setbuf(stdin, NULL), setbuf(stdout, NULL);
 
@@ -251,7 +272,8 @@ main() {
 }
 
 int
-main1() {
+main_cli_test() {
+// main() {
     setbuf(stdin, NULL), setbuf(stdout, NULL);
 
     char buf[PATH_MAX];
@@ -261,7 +283,7 @@ main1() {
     lg_inf("selpaster starting");
 
     twiddle();
-    untwiddle();
+    // untwiddle();
 
     return 0;
 }
