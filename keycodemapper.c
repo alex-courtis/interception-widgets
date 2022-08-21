@@ -10,7 +10,9 @@ typedef struct Mapping {
 } Mapping;
 
 static const Mapping mappings[] = {
-    { KEY_CAPSLOCK, KEY_ESC, },
+    { KEY_LEFTALT, KEY_LEFTMETA, },
+    { KEY_RIGHTALT, KEY_RIGHTMETA, },
+    { KEY_LEFTMETA, KEY_LEFTALT, },
 };
 
 int
@@ -40,9 +42,12 @@ loop() {
         }
 
         // map
-        for (i = 0; i < LENGTH(mappings); i++)
-            if (mappings[i].from == input.code)
+        for (i = 0; i < LENGTH(mappings); i++) {
+            if (mappings[i].from == input.code) {
                 input.code = mappings[i].to;
+                break;
+            }
+        }
 
         // forward
         write_event(&input);
