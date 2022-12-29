@@ -169,7 +169,7 @@ finally:
     return success;
 }
 
-void twiddle() {
+void twiddle(void) {
     if (twiddled)
         return;
 
@@ -206,7 +206,7 @@ void twiddle() {
     twiddled = true;
 }
 
-void untwiddle() {
+void untwiddle(void) {
     if (!twiddled)
         return;
 
@@ -224,7 +224,7 @@ void untwiddle() {
 }
 
 void
-loop() {
+loop(void) {
     struct input_event input;
 
     while (read_event(&input)) {
@@ -272,7 +272,7 @@ main() {
 }
 
 int
-main_cli_test() {
+main_cli_test(void) {
 // main() {
     setbuf(stdin, NULL), setbuf(stdout, NULL);
 

@@ -20,9 +20,5 @@ install: $(BIN)
 uninstall:
 	rm -f $(addprefix $(PREFIX)/bin/,$(BIN))
 
-# https://github.com/alex-courtis/arch/blob/7ca6c8d7f7aa910ec522470bb7a96ddb24c9a1ea/bin/ctags-something
-tags: $(SRC) $(INC)
-	ctags-c $(CPPFLAGS) --project-src $(^)
-
 .PHONY: all clean install uninstall
 

@@ -75,7 +75,7 @@ should_squish(const struct input_event *input, Key keys[], const size_t nkeys) {
 }
 
 void
-loop() {
+loop(void) {
     struct input_event input;
     size_t i;
     unsigned int al, ar, at, squish;

@@ -1,6 +1,7 @@
 keycodemapper
+keycounter
 modifiertrainer
 selpaster
 **/*.o
 **/*.log
-tags
+.ccls

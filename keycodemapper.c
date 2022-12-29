@@ -27,7 +27,7 @@ write_event(const struct input_event *event) {
 }
 
 void
-loop() {
+loop(void) {
     struct input_event input;
     size_t i;
 
