@@ -246,8 +246,8 @@ loop(void) {
             twiddle();
         }
 
-        // twiddle on shifted insert RELEASE
-        if (shift_down && input.code == KEY_INSERT && input.value == INPUT_VAL_RELEASE) {
+        // untwiddle on insert RELEASE
+        if (input.code == KEY_INSERT && input.value == INPUT_VAL_RELEASE) {
             untwiddle();
         }
 
